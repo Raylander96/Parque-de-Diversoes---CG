@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <math.h>
+#include <GL/glew.h>
+#include <GL/freeglut.h>
+#include <SOIL/SOIL.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_audio.h>
+#include <SDL/SDL_mixer.h>
+#include "globais.h"
+#include "teclado.h"
+#include "skybox.h"
+#include "personagem.h"
