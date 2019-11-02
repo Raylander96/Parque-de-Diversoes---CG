@@ -8,12 +8,29 @@ void set_colors(int name)
 	}
 
 	if(name==GWHEEL_RING)
-	{	float materialColours[][3]={{0.8,0.8,0.0},{0.33,0.33,0.33}, {0.9,0.4,0.4} ,{0.5450,0.27,0}, {0.36,0.36,0.36}},materialLightBr[][3]={{0,0,0},{0.3,0.3,0.3},{0,0,0},{0,0,0},{0.0,0.0,0.0}};
+	{	float 	materialColours[][3]={
+								{0.4,0.0,0.2},
+								{0.33,0.33,0.33}, 
+								{0.9,0.4,0.4} ,
+								{0.5450,0.27,0}, 
+								{0.36,0.36,0.36}},
+				materialLightBr[][3]={
+								{0,0,0},
+								{0.3,0.3,0.3},
+								{0,0,0},{0,0,0},
+								{0.0,0.0,0.0}};
 		glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,materialColours[gwheel_ring_color]);
 		glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,materialLightBr[gwheel_ring_color]);
 	}
 	if(name==GWHEEL_TROLLEY)
-	{	float materialColours[][3]={{0.2,0.2,0.8},{0.8,0.8,0.0},{0.33,0.33,0.33}, {0.9,0.4,0.4} ,{0.5450,0.27,0}},materialLightBr[]={0.1,0.1,0.1};
+	{	float materialColours[][3]={
+								{0.0,0.5,0.7},
+								{0.8,0.8,0.0},
+								{0.33,0.33,0.33}, 
+								{0.9,0.4,0.4} ,
+								{0.5450,0.27,0}},
+				
+				materialLightBr[]={0.1,0.1,0.1};
 		glMaterialfv(GL_FRONT_AND_BACK,GL_DIFFUSE,materialColours[gwheel_trolley_color]);
 		glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,materialLightBr);
 	}

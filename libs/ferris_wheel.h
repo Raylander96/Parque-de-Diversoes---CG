@@ -54,9 +54,6 @@ void draw_wagon(){
 	glRotatef(90.0, 1.0, 0.0, 0.0);
 	glPopMatrix();
 	glTranslatef(0.0, wagon_size, 0.0);
-	glRotatef(-90.0, 1.0, 0.0, 0.0);
-	glutSolidCone(5.0, 5.0, 6,6);
-	glRotatef(90.0, 1.0, 0.0, 0.0);
 	glTranslatef(0.0, -2*wagon_size, 0.0);
 	glRotatef(-90.0, 1.0, 0.0, 0.0);
 	GLUquadricObj *quadric=gluNewQuadric();
