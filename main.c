@@ -61,7 +61,25 @@ void displayReshape(int width,int height){
 	glMatrixMode(GL_MODELVIEW);						
 	glLoadIdentity();			
 }
+void fogEnable(){
 
+	if(fog){	
+		GLfloat density = 0.009; //set the density to 0.3 which isacctually quite thick
+		GLfloat fogColor[4] = {0.5, 0.5, 0.5, 1.0}; //set the forcolor to grey
+
+		glEnable (GL_DEPTH_TEST); 
+		glEnable (GL_FOG); 
+		glFogi (GL_FOG_MODE, GL_EXP2); 
+		glFogfv (GL_FOG_COLOR, fogColor); 
+		glFogf (GL_FOG_DENSITY, density); 
+		glHint (GL_FOG_HINT, GL_NICEST); 
+	
+	}else{
+		glDisable(GL_FOG);
+	}
+	
+	
+}
 void keyboard(unsigned char key, int x, int y){
 
 	if(key=='w')
@@ -80,6 +98,15 @@ void keyboard(unsigned char key, int x, int y){
 		x_r-=3;
 	if(key == 27){
 		exit(0);
+	}
+	if(key == 'n'){
+
+		if(fog){
+			fog=0;
+		}else{
+			fog=1;
+		}
+		fogEnable();
 	}
 
 	display();

@@ -7,6 +7,7 @@ const int 	SKY_FRONT=0,
 			GWHEEL_RING=3,
 			GWHEEL_TROLLEY=4, 
 			GWHEEL_TOP=5;
+			
 
 
 int 	ni=0,
@@ -19,7 +20,8 @@ int 	ni=0,
 		cswing=1, 
 		gw=1,
 		gwheel_ring_color=0, 
-		gwheel_trolley_color=0;
+		gwheel_trolley_color=0,
+		fog=0;
 
 GLint 	skybox[6], 
 		floor_park,
