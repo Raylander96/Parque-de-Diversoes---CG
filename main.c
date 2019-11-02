@@ -78,6 +78,9 @@ void keyboard(unsigned char key, int x, int y){
 		x_r+=3;
 	if(key=='a') 
 		x_r-=3;
+	if(key == 27){
+		exit(0);
+	}
 
 	display();
 }
