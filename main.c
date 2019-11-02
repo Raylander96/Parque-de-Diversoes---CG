@@ -82,24 +82,24 @@ void fogEnable(){
 }
 void keyboard(unsigned char key, int x, int y){
 
-	if(key=='w')
+	if(key=='w'  || key == 'W')
 	{
 		movcord[0]+=5*cos(-1*x_r*3.14/180.0);
 		movcord[2]+=5*sin(1*x_r*3.14/180.0);
 	}
-	if(key== 's')
+	if(key== 's'  || key == 'S')
 	{
 		movcord[0]-=5*cos(-1*x_r*3.14/180.0);
 		movcord[2]-=5*sin(1*x_r*3.14/180.0);
 	}
-	if(key=='d') 
+	if(key=='d' || key == 'D') 
 		x_r+=3;
-	if(key=='a') 
+	if(key=='a' || key == 'A') 
 		x_r-=3;
 	if(key == 27){
 		exit(0);
 	}
-	if(key == 'n'){
+	if(key == 'n' || key == 'N'){
 
 		if(fog){
 			fog=0;
