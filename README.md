@@ -26,20 +26,12 @@ apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf
 
 ```
 
-## Compilação
+## Compilar e executar
 
-Para compilar o projeto, execute de um terminal na pasta raiz:
+Para compilar e executar o projeto, execute de um terminal na pasta raiz:
 
 ```
 make
-```
-
-## Execução
-
-Para executar o jogo, execute de um terminal na pasta raiz:
-
-```
-make run
 ```
 
 ## Screenshots
