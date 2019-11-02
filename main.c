@@ -1,152 +1,106 @@
-#include "Bibliotecas/include.h"
+#include<stdlib.h>
+#include<GL/glut.h>
+#include<stdio.h>
+#include<math.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_audio.h>
+#include <SDL/SDL_mixer.h>
+#include "libs/globais.h"
+#include "libs/images.h"
+#include "libs/skybox.h"
+#include "libs/lights.h"
+#include "libs/draw.h"
+#include "libs/ferris_wheel.h"
+#include "libs/song.h"
 
-void carregaImagens ()
-{
-    // Carrega a textura
-    matoTexture = SOIL_load_OGL_texture
-    (
-        "Imagens/mato2.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-    );
+void display();
 
-    boxRight = SOIL_load_OGL_texture
-    (
-        "Imagens/Skybox/right.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-    );
 
-    boxLeft = SOIL_load_OGL_texture
-    (
-        "Imagens/Skybox/left.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-    );
 
-    boxFront = SOIL_load_OGL_texture
-    (
-        "Imagens/Skybox/front.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-    );
+void idle(){
 
-    boxBack = SOIL_load_OGL_texture
-    (
-        "Imagens/Skybox/back.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-    );
-
-    boxUp = SOIL_load_OGL_texture
-    (
-        "Imagens/Skybox/up.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-    );
-
-    boxDown = SOIL_load_OGL_texture
-    (
-        "Imagens/Skybox/down.jpg",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-    );
+	gw_spin+=0.25;
+	display();
 }
 
-void carregaMusicas ()
-{
-    atexit(Mix_CloseAudio);
-    theme = Mix_LoadMUS("Sons/Ambient_Song.mp3");
-}
+void display(){
 
-void inicializa()
-{
-  	int i, j, k, w = 0;
-
-  	glClearColor (0, 0, 0, 1);
-
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightDifAndSpec1);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, lightDifAndSpec1);
-    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.01f);
-
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globAmb);
-    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-
-    glShadeModel(GL_SMOOTH);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_COLOR_MATERIAL);
-
-    carregaImagens();
-    carregaMusicas();
-
-    // Não mostrar faces do lado de dentro
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-}
-
-void desenha()
-{
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glColor4f(1.0,1.0,1.0,1.0);
+	glLoadIdentity();	
+	gluLookAt(viewer[0], viewer[1], viewer[2],camera[0], camera[1], camera[2],0, 1, 0);
+	
+	glRotatef(x_r, 0, 1, 0);
+	Draw_Skybox(viewer[0]+(0.05*movcord[0]),viewer[1]+(0.05*movcord[1]),viewer[2]+(0.05*movcord[2]),250,250,250);
 
-   	glEnable(GL_DEPTH_TEST);
-        desenhaPersonagem();
-        //desenhabrinquedos();
-        desenhaSkybox();    
-	glDisable(GL_DEPTH_TEST);
+	glTranslatef(movcord[0],movcord[1],movcord[2]);
+	draw_ground();  
+	glPushMatrix();
+		glTranslatef(80,0,165);
+		glPopMatrix();
+			glTranslatef(co_x, co_y, -co_z);
+		glPopMatrix();
+	glPushMatrix();
+	
+	glTranslatef(gw_x, gw_y, -gw_z);
+	glRotatef(gw_spin, 0.0, 0.0, 1.0);
+	draw_gwheel();
+	glPopMatrix();
+	
+	
+	glutSwapBuffers();
 
-    glutSwapBuffers();
 }
 
-void redimensiona(int w, int h)
-{
-   double ar = w/h;
-    
-    if (ar > 16/9)
-    {
-        new_w = (h/9) * 16;
-        new_h = (h/9) * 9;
-    }
+void displayReshape(int width,int height){
 
-    else
-    {
-        new_w = (w/16) * 16;
-        new_h = (w/16) * 9;
-    }
-
-    glViewport((w-new_w)/2,(h-new_h)/2,new_w,new_h);
-
-   glMatrixMode (GL_PROJECTION);
-   glLoadIdentity ();
-   gluPerspective(65.0, (GLfloat) new_w/(GLfloat) new_h, 1.0, 100.0);
-   glMatrixMode(GL_MODELVIEW);
-   glLoadIdentity();
+	glViewport(0,0,width,height);						
+	glMatrixMode(GL_PROJECTION);						
+	glLoadIdentity();
+	gluPerspective(65,(GLfloat)width/(GLfloat)height,0.01f,1000.0f);
+	glMatrixMode(GL_MODELVIEW);						
+	glLoadIdentity();			
 }
 
-int main(int argc, char** argv)
-{
-    //inicializa o sdl_mixer
-    SDL_Init (SDL_INIT_AUDIO);
-    atexit (SDL_Quit);
-    Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 1024);  
+void keyboard(unsigned char key, int x, int y){
 
-   glutInit(&argc, argv);
-   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-   glutInitWindowSize (1280, 720);
-   glutInitWindowPosition (100, 100);
-   glutCreateWindow ("Harry Pottah");
-   inicializa();
+	if(key=='w')
+	{
+		movcord[0]+=5*cos(-1*x_r*3.14/180.0);
+		movcord[2]+=5*sin(1*x_r*3.14/180.0);
+	}
+	if(key== 's')
+	{
+		movcord[0]-=5*cos(-1*x_r*3.14/180.0);
+		movcord[2]-=5*sin(1*x_r*3.14/180.0);
+	}
+	if(key=='d') 
+		x_r+=3;
+	if(key=='a') 
+		x_r-=3;
 
-   glutDisplayFunc(desenha);
-   glutReshapeFunc(redimensiona);
-   glutKeyboardFunc(teclado);
-
-   glutMainLoop();
-   return 0;
+	display();
 }
+
+int main(int argc, char** argv){
+
+   		SDL_Init (SDL_INIT_AUDIO);
+    	atexit (SDL_Quit);
+    	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 1024);  
+
+		glutInit(&argc,argv);
+		glutInitDisplayMode(GLUT_RGBA|GLUT_DOUBLE|GLUT_DEPTH);
+		glutInitWindowSize(800,600);
+		glutCreateWindow("Parque de Diversao");
+		initLights();
+		initSky();
+		songPlay();
+  		glutDisplayFunc(display);
+	 	glutReshapeFunc(displayReshape);
+	 	glutKeyboardFunc(keyboard);
+		glutIdleFunc(idle);
+		glutMainLoop();
+		return 0;
+}
+
+
