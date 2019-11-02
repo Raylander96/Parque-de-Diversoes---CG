@@ -46,7 +46,7 @@ void display(){
 		glPopMatrix();
 	glPushMatrix();
 	glTranslatef(gw_x, gw_y, -gw_z);
-	drawElephant();
+	//drawElephant();
 	glRotatef(gw_spin, 0.0, 0.0, 1.0);
 	
 	draw_gwheel();
