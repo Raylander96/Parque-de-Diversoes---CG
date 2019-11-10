@@ -6,6 +6,11 @@
         "stdlib.h": "c",
         "stdio.h": "c",
         "string.h": "c",
-        "song.h": "c"
+        "song.h": "c",
+        "coords.h": "c",
+        "malha.h": "c",
+        "modelo.h": "c",
+        "toksplit.h": "c",
+        "lista.h": "c"
     }
 }

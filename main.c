@@ -12,10 +12,11 @@
 #include "libs/draw.h"
 #include "libs/ferris_wheel.h"
 #include "libs/song.h"
-
+#include "libs/modelo.h"
 GLuint elephant;
 float elephantrot;
 char ch='1';
+struct modelo *modelo, *modelo1;
 
 void display();
 
@@ -28,7 +29,7 @@ void idle(){
 }
 
 void display(){
-
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glColor4f(1.0,1.0,1.0,1.0);
 	glLoadIdentity();	
@@ -38,24 +39,41 @@ void display(){
 	Draw_Skybox(viewer[0]+(0.05*movcord[0]),viewer[1]+(0.05*movcord[1]),viewer[2]+(0.05*movcord[2]),250,250,250);
 
 	glTranslatef(movcord[0],movcord[1],movcord[2]);
-	draw_ground();  
+	draw_ground();
+	//glColor3f(1.0, 1.0, 1.0);
+
+	
 	glPushMatrix();
 		glTranslatef(80,0,165);
 		glPopMatrix();
 			glTranslatef(co_x, co_y, -co_z);
 		glPopMatrix();
 	glPushMatrix();
-	glTranslatef(gw_x, gw_y, -gw_z);
-	//drawElephant();
-	glRotatef(gw_spin, 0.0, 0.0, 1.0);
-	
-	draw_gwheel();
+		glTranslatef(gw_x, gw_y, -gw_z);
+		glRotatef(gw_spin, 0.0, 0.0, 1.0);
+		draw_gwheel();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glPopMatrix();
-	//glLoadIdentity();
-    
+	
+	glPushMatrix();
+		glTranslatef(co_x, co_y, -co_z);
+		glScalef(2, 2, 2);
+		glEnable(GL_LIGHTING);
+		desenhaModelo(modelo);
+		glDisable(GL_LIGHTING);
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(co_x, co_y, co_z);
+		glScalef(2, 2, 2);
+		glEnable(GL_LIGHTING);
+		desenhaModelo(modelo1);
+		glDisable(GL_LIGHTING);
+	glPopMatrix();
+
+
 	
 	glutSwapBuffers();
-
 }
 
 void displayReshape(int width,int height){
@@ -119,51 +137,38 @@ void keyboard(unsigned char key, int x, int y){
 	display();
 }
 
-void loadObj(char *fname)
-{
-    FILE *fp;
-    int read;
-    GLfloat x, y, z;
-    char ch;
-    elephant=glGenLists(1);
-    fp=fopen(fname,"r");
-    if (!fp)
-    {
-        printf("can't open file %s\n", fname);
-        exit(1);
-    }
-    glPointSize(5.0);
-    glNewList(elephant, GL_COMPILE);
-    {
-        glPushMatrix();
-        glBegin(GL_POINTS);
-        while(!(feof(fp)))
-        {
-            read=fscanf(fp,"%c %f %f %f",&ch,&x,&y,&z);
-            if(read==4&&ch=='v')
-            {
-                glVertex3f(x,y,z);
-            }
-        }
-        glEnd();
-    }
-    glPopMatrix();
-    glEndList();
-    fclose(fp);
+void setup() {
+    glClearColor(1.0, 1.0, 1.0, 0.0); // branco
+    glCullFace(GL_BACK);
+    // habilita o depth buffer para que a coordenada Z seja usada
+    glEnable(GL_DEPTH_TEST);
+
+    // habilita anti-aliasing para desenhar as linhas de forma suave
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glEnable( GL_LINE_SMOOTH );
+
+    // habilita blending para que transparências (e.g., linhas suaves) funcionem
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // modelo de iluminação
+    glEnable(GL_LIGHT0);
+    vetor direcaoLuz[] = { -1.0, 2.0, 2.0, 0.0 };
+    glLightfv(GL_LIGHT0, GL_POSITION, direcaoLuz);
+    glEnable(GL_LIGHT1);
+    vetor direcaoLuz2[] = { 2.0, 4.0, -2.0, 0.0 };
+    glLightfv(GL_LIGHT1, GL_POSITION, direcaoLuz2);
+
+    glShadeModel(GL_FLAT);
+
+    
 }
 
-void drawElephant()
-{
-    loadObj("images/al.obj");
-    glPushMatrix();
-    glTranslatef(0,-40.00,-105);
-    glColor3f(1.0,0.23,0.27);
-    glScalef(20.9,20.9,20.9);
-    glRotatef(elephantrot,0,1,0);
-    glCallList(elephant);
-    glPopMatrix();
-    elephantrot=elephantrot+0.6;
-    if(elephantrot>360)elephantrot=elephantrot-360;
+void loadModels(){
+	// carrega o modelo
+   	modelo = carregaModelo("porsche.obj");
+	modelo1 = carregaModelo("flowers.obj");
+    //modelo = carregaModelo("arvore.obj");
 }
 
 int main(int argc, char** argv){
@@ -179,10 +184,14 @@ int main(int argc, char** argv){
 		initLights();
 		initSky();
 		songPlay();
+		//setup();
+		loadModels();
   		glutDisplayFunc(display);
 	 	glutReshapeFunc(displayReshape);
 	 	glutKeyboardFunc(keyboard);
 		glutIdleFunc(idle);
+		
+		
 		glutMainLoop();
 		return 0;
 }
