@@ -16,7 +16,7 @@
 GLuint elephant;
 float elephantrot;
 char ch='1';
-struct modelo *placa, *seat,*tower,*tree_1,*tree_2,*tree_3,*light,*bush,*home,*cup;
+struct modelo *placa, *seat,*tower,*tree_1,*tree_2,*tree_3,*light,*bush,*home,*cup,*seat_park;
 
 void display();
 
@@ -246,7 +246,38 @@ void display(){
 		desenhaModelo(cup);
 		glDisable(GL_LIGHTING);
 	glPopMatrix();
-	
+
+	//bancos lado esquerdo
+	j = 365;
+	for(int i=0 ; i <4; i++){
+		glPushMatrix();
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glTranslatef(-220, -15, j);
+			glRotatef(90.0, 0.0, 1.0, 0.0);
+			glScalef(0.1, 0.1, 0.1);
+			glEnable(GL_LIGHTING);
+			desenhaModelo(seat_park);
+			glDisable(GL_LIGHTING);
+		glPopMatrix();
+		j=j-50;
+	}
+
+	//bancos lado direito
+	j = 365;
+	for(int i=0 ; i <4; i++){
+		glPushMatrix();
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glTranslatef(-140, -15, j);
+			glRotatef(-90.0, 0.0, 1.0, 0.0);
+			glScalef(0.1, 0.1, 0.1);
+			glEnable(GL_LIGHTING);
+			desenhaModelo(seat_park);
+			glDisable(GL_LIGHTING);
+		glPopMatrix();
+		j=j-50;
+	}
+
+
 	glutSwapBuffers();
 }
 
@@ -350,6 +381,8 @@ void loadModels(){
 	bush = carregaModelo("objs/bush_1.obj");
 	home = carregaModelo("objs/house.obj");
 	cup = carregaModelo("objs/coffeMug1_free_obj.obj");
+	seat_park = carregaModelo("objs/Cgtuts_Wood_Bench_OBJ.obj");
+	
 }
 
 int main(int argc, char** argv){
