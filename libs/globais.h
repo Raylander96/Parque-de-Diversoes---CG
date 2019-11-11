@@ -24,6 +24,7 @@ GLfloat viewer[3] = {1.0f, 0.0f, 0.0f},
 
 GLdouble 	
 			gw_spin = 0.0,
+			cup_spin = 0.0,
 			tower_up_down = 0.0,
 			gw_width = 8.0, 
 			gw_x=-180.0, 

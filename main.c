@@ -25,6 +25,7 @@ void display();
 void idle(){
 	
 	gw_spin+=0.25;
+	cup_spin+=2.5;
 
 	if(tower_up_down==0){
 		up=1;
@@ -219,7 +220,7 @@ void display(){
 	glPushMatrix();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glTranslatef(-430, -15, +190);
-		//glRotatef(gw_spin, 0.0, 0.0, 1.0);
+		glRotatef(cup_spin, 0.0, cup_spin, 0.0);
 		glScalef(0.7, 0.7, 0.7);
 		glEnable(GL_LIGHTING);
 		desenhaModelo(cup);
@@ -229,7 +230,7 @@ void display(){
 	glPushMatrix();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glTranslatef(-430, -15, +120);
-		//glRotatef(gw_spin, 0.0, 0.0, 1.0);
+		glRotatef(cup_spin, 0.0, -cup_spin, 0.0);
 		glScalef(0.7, 0.7, 0.7);
 		glEnable(GL_LIGHTING);
 		desenhaModelo(cup);
@@ -239,7 +240,7 @@ void display(){
 	glPushMatrix();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glTranslatef(-380, -15, +150);
-		//glRotatef(gw_spin, 0.0, 0.0, 1.0);
+		glRotatef(cup_spin, 0.0, -cup_spin, 0.0);
 		glScalef(0.7, 0.7, 0.7);
 		glEnable(GL_LIGHTING);
 		desenhaModelo(cup);
