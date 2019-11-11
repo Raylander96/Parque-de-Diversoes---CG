@@ -16,7 +16,7 @@
 GLuint elephant;
 float elephantrot;
 char ch='1';
-struct modelo *modelo, *modelo1;
+struct modelo *placa, *seat,*tower,*tree_1,*tree_2,*tree_3,*light,*bush,*home,*cup;
 
 void display();
 
@@ -49,29 +49,188 @@ void display(){
 			glTranslatef(co_x, co_y, -co_z);
 		glPopMatrix();
 	glPushMatrix();
-		glTranslatef(gw_x, gw_y, -gw_z);
+		glTranslatef(gw_x, gw_y, -10);
 		glRotatef(gw_spin, 0.0, 0.0, 1.0);
 		draw_gwheel();
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glPopMatrix();
 	
 	glPushMatrix();
-		glTranslatef(co_x, co_y, -co_z);
-		glScalef(2, 2, 2);
+		glTranslatef(-180, -15, +400);
+		glScalef(10, 10, 10);
 		glEnable(GL_LIGHTING);
-		desenhaModelo(modelo);
+		desenhaModelo(placa);
 		glDisable(GL_LIGHTING);
 	glPopMatrix();
 
 	glPushMatrix();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glTranslatef(co_x, co_y, co_z);
-		glScalef(2, 2, 2);
+		glScalef(25, 25, 25);
 		glEnable(GL_LIGHTING);
-		desenhaModelo(modelo1);
+		desenhaModelo(seat);
 		glDisable(GL_LIGHTING);
 	glPopMatrix();
 
+	glPushMatrix();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glTranslatef(co_x-55, co_y-10, co_z+85);
+		glScalef(25, 25, 25);
+		glEnable(GL_LIGHTING);
+		desenhaModelo(tower);
+		glDisable(GL_LIGHTING);
+	glPopMatrix();
 
+	glPushMatrix();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glTranslatef(-100, -15, +400);
+		glScalef(10, 10, 10);
+		glEnable(GL_LIGHTING);
+		desenhaModelo(tree_1);
+		glDisable(GL_LIGHTING);
+	glPopMatrix();
+
+	glPushMatrix();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glTranslatef(-250, -15, +400);
+		glScalef(10, 10, 10);
+		glEnable(GL_LIGHTING);
+		desenhaModelo(tree_2);
+		glDisable(GL_LIGHTING);
+	glPopMatrix();
+
+	float j = 390;
+	for(int i=0 ; i <5; i++){
+		glPushMatrix();
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glTranslatef(-220, -15, j);
+			glScalef(10, 10, 10);
+			glEnable(GL_LIGHTING);
+			desenhaModelo(light);
+			glDisable(GL_LIGHTING);
+		glPopMatrix();
+		j=j-50;
+	}
+
+	j = 390;
+	for(int i=0 ; i <5; i++){
+		glPushMatrix();
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glTranslatef(-140, -15, j);
+			glScalef(10, 10, 10);
+			glEnable(GL_LIGHTING);
+			desenhaModelo(light);
+			glDisable(GL_LIGHTING);
+		glPopMatrix();
+		j=j-50;
+	}
+	
+	//Frente lado esquerdo
+	float k = -220;
+	for(int i=0 ; i <25; i++){
+		glPushMatrix();
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glTranslatef(k, -15, +400);
+			glScalef(10, 10, 10);
+			glEnable(GL_LIGHTING);
+			desenhaModelo(bush);
+			glDisable(GL_LIGHTING);
+		glPopMatrix();
+		k=k-12;
+	}
+	//lateral direita
+	float l = 400;
+	for(int i=0 ; i <50; i++){
+		glPushMatrix();
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glTranslatef(k, -15, l);
+			glScalef(10, 10, 10);
+			glEnable(GL_LIGHTING);
+			desenhaModelo(bush);
+			glDisable(GL_LIGHTING);
+		glPopMatrix();
+		l=l-12;
+	}
+
+	//Frente lado direito
+	k = -140;
+	for(int i=0 ; i <25; i++){
+		glPushMatrix();
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glTranslatef(k, -15, +400);
+			glScalef(10, 10, 10);
+			glEnable(GL_LIGHTING);
+			desenhaModelo(bush);
+			glDisable(GL_LIGHTING);
+		glPopMatrix();
+		k=k+12;
+	}
+
+	//lateral esquerdo
+	l = 400;
+	for(int i=0 ; i <50; i++){
+		glPushMatrix();
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glTranslatef(k, -15, l);
+			glScalef(10, 10, 10);
+			glEnable(GL_LIGHTING);
+			desenhaModelo(bush);
+			glDisable(GL_LIGHTING);
+		glPopMatrix();
+		l=l-12;
+	}
+
+	//fundo
+	for(int i=0 ; i <57; i++){
+		glPushMatrix();
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glTranslatef(k, -15, l);
+			glScalef(10, 10, 10);
+			glEnable(GL_LIGHTING);
+			desenhaModelo(bush);
+			glDisable(GL_LIGHTING);
+		glPopMatrix();
+		k=k-12;
+	}
+
+	glPushMatrix();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glTranslatef(-400, -15, +150);
+		glScalef(0.4, 0.4, 0.4);
+		glEnable(GL_LIGHTING);
+		desenhaModelo(home);
+		glDisable(GL_LIGHTING);
+	glPopMatrix();
+
+	glPushMatrix();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glTranslatef(-430, -15, +190);
+		//glRotatef(gw_spin, 0.0, 0.0, 1.0);
+		glScalef(0.7, 0.7, 0.7);
+		glEnable(GL_LIGHTING);
+		desenhaModelo(cup);
+		glDisable(GL_LIGHTING);
+	glPopMatrix();
+
+	glPushMatrix();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glTranslatef(-430, -15, +120);
+		//glRotatef(gw_spin, 0.0, 0.0, 1.0);
+		glScalef(0.7, 0.7, 0.7);
+		glEnable(GL_LIGHTING);
+		desenhaModelo(cup);
+		glDisable(GL_LIGHTING);
+	glPopMatrix();
+
+	glPushMatrix();
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glTranslatef(-380, -15, +150);
+		//glRotatef(gw_spin, 0.0, 0.0, 1.0);
+		glScalef(0.7, 0.7, 0.7);
+		glEnable(GL_LIGHTING);
+		desenhaModelo(cup);
+		glDisable(GL_LIGHTING);
+	glPopMatrix();
 	
 	glutSwapBuffers();
 }
@@ -166,9 +325,16 @@ void setup() {
 
 void loadModels(){
 	// carrega o modelo
-   	modelo = carregaModelo("porsche.obj");
-	modelo1 = carregaModelo("flowers.obj");
-    //modelo = carregaModelo("arvore.obj");
+   	placa = carregaModelo("objs/placa_2.obj");
+	seat = carregaModelo("objs/seat.obj");
+    tower = carregaModelo("objs/tower.obj");
+	tree_1 = carregaModelo("objs/tree_1.obj");
+	tree_2 = carregaModelo("objs/tree_2.obj");
+	tree_3 = carregaModelo("objs/tree_3.obj");
+	light = carregaModelo("objs/light_baseless.obj");
+	bush = carregaModelo("objs/bush_1.obj");
+	home = carregaModelo("objs/house.obj");
+	cup = carregaModelo("objs/coffeMug1_free_obj.obj");
 }
 
 int main(int argc, char** argv){

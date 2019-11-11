@@ -11,6 +11,7 @@
         "malha.h": "c",
         "modelo.h": "c",
         "toksplit.h": "c",
-        "lista.h": "c"
+        "lista.h": "c",
+        "freeglut.h": "c"
     }
 }
