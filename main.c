@@ -23,8 +23,22 @@ void display();
 
 
 void idle(){
-
+	
 	gw_spin+=0.25;
+
+	if(tower_up_down==0){
+		up=1;
+	}
+	if(tower_up_down==400){
+		up=0;
+	}
+
+	if(up){
+		tower_up_down+=1;
+	}else{
+		tower_up_down-=5;
+	}
+	
 	display();
 }
 
@@ -65,7 +79,7 @@ void display(){
 
 	glPushMatrix();
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glTranslatef(co_x, co_y, co_z);
+		glTranslatef(co_x, tower_up_down, co_z);
 		glScalef(25, 25, 25);
 		glEnable(GL_LIGHTING);
 		desenhaModelo(seat);
