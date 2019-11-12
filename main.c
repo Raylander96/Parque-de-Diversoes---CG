@@ -19,7 +19,7 @@ char ch='1';
 struct modelo *placa, *seat,*tower,*tree_1,*tree_2,*tree_3,*light,*bush,*home,*cup,*seat_park,*parking;
 
 void display();
-
+void processSpecialKeys(int key, int xx, int yy);
 
 
 void idle(){
@@ -318,69 +318,92 @@ void fogEnable(){
 	
 	
 }
+void processSpecialKeys(int key, int xx, int yy){
+
+   switch (key) {
+    	 case GLUT_KEY_LEFT :
+  			if(move==0 && cam<3 && cam!=0){
+				  cam--;
+			}else if(move==0 && cam==0){
+				cam=2;
+			}	
+			place_camera(cam);
+			break;
+  		case GLUT_KEY_RIGHT :
+			if(move==0 && cam<2){
+				  cam++;
+			}else if(move==0 && cam==2){
+				cam=0;
+			}	
+			place_camera(cam);
+			break;
+ 	}
+	 
+	 display();
+
+}
+
 void keyboard(unsigned char key, int x, int y){
 	if(key=='+') movcord[1]--;
 	if(key=='-') movcord[1]++;
-	//if(move){
-		if(key=='w'  || key == 'W'){
-		movcord[0]+=5*cos(-1*x_r*3.14/180.0);
-		movcord[2]+=5*sin(1*x_r*3.14/180.0);
-		}
 
-		if(key== 's'  || key == 'S'){
-			movcord[0]-=5*cos(-1*x_r*3.14/180.0);
-			movcord[2]-=5*sin(1*x_r*3.14/180.0);
-		}
-
-		if(key=='d' || key == 'D') 
-			x_r+=3;
+	switch (key){
 		
-		if(key=='a' || key == 'A') 
-			x_r-=3;
-	//}
+		case 'w':
+		case 'W':
+			if(move){
+				movcord[0]+=5*cos(-1*x_r*3.14/180.0);
+				movcord[2]+=5*sin(1*x_r*3.14/180.0);
+			}
+			break;
+		case 's':
+		case 'S':
+			if(move){
+				movcord[0]-=5*cos(-1*x_r*3.14/180.0);
+				movcord[2]-=5*sin(1*x_r*3.14/180.0);
+				break;
+			}
+		case 'd':
+		case 'D':
+			if(move){
+				x_r+=3;
+				break;
+			}
+		case 'a':
+		case 'A':
+			if(move){
+				x_r-=3;
+			}
+		break;
+		case 'n':
+		case 'N':
+			if(fog)
+				fog=0;
+			else
+				fog=1;
+			
+			fogEnable();
+			break;
+		case 27:
+			exit(0);
+			break;
+		case '1':
+			move=1;
+			place_camera(4);
+			break;
+		case '2':
+			move=0;
+			place_camera(cam);
+			break;
+		case '3':
+			move=1;
+			place_camera(3);
+			break;
 
-	if(key==75){
-		camw--;
-		place_camera(camw);
-	}
-	if(key==77){
-		camw++;
-		place_camera(camw);
+		default:
+			break;
 	}
 	
-	if(key == 27){
-		exit(0);
-	}
-
-	if(key=='2'){
-		move=0;
-		place_camera(2);
-	}
-	if(key=='3'){
-		move=0;
-		place_camera(3);
-	}
-
-	if(key=='1'){
-		move=1;
-		place_camera(1);
-	}
-
-	if(key=='4'){
-		move=1;
-		place_camera(4);
-	}
-		
-
-	if(key == 'n' || key == 'N'){
-
-		if(fog){
-			fog=0;
-		}else{
-			fog=1;
-		}
-		fogEnable();
-	}
 
 	display();
 }
@@ -432,16 +455,9 @@ void place_camera(int action)
 {
 
 	camw=action;
-	//Primeira pessoa posicao inicial
-	if(camw==1){
-		viewer[1] = -0.0f;
-		x_r=93;
-		movcord[0]=0;
-		movcord[1]=-10;
-		movcord[2]=-520;
-	}
+	
 	//Roda gigante
-	if(camw==2){	
+	if(camw==1){	
 		viewer[1] = 0.5;
 		x_r=93;
 		movcord[0]=0;//Direira esquerda
@@ -449,7 +465,7 @@ void place_camera(int action)
 		movcord[2]=-30;//Frente traz=s
 	}
 	//Xicara maluca
-	if(camw==3){
+	if(camw==0){
 		viewer[1] = 0.5;
 		x_r=362;	
 		movcord[0]=8;
@@ -458,12 +474,29 @@ void place_camera(int action)
 	}
 
 	//tower
-	if(camw==4){
+	if(camw==2){
 		viewer[1] = 1.0;
 		x_r=180;	
 		movcord[0]=-80;
 		movcord[1]=-300;
 		movcord[2]=0;
+	}
+
+	//Primeira pessoa posicao inicial
+	if(camw==3){
+		viewer[1] = -0.0f;
+		x_r=93;
+		movcord[0]=0;
+		movcord[1]=-10;
+		movcord[2]=-520;
+	}
+	//visao diagonal
+	if(camw==4){
+		viewer[1] = 1.3;
+		x_r=90;	
+		movcord[0]=0;
+		movcord[1]=-450;
+		movcord[2]=-400;
 	}
 
 }
@@ -486,6 +519,7 @@ int main(int argc, char** argv){
   		glutDisplayFunc(display);
 	 	glutReshapeFunc(displayReshape);
 	 	glutKeyboardFunc(keyboard);
+		 glutSpecialFunc(processSpecialKeys);
 		glutIdleFunc(idle);
 		
 		

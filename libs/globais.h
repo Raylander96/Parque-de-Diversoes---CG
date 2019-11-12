@@ -11,7 +11,7 @@ const int 	SKY_FRONT=0,
 int 	move=1;
 		gwheel_ring_color=0, 
 		gwheel_trolley_color=0,
-		fog=0, up=1,camw=0;
+		fog=0, up=1,camw=0,cam=1;
 
 GLint 	skybox[6], 
 		floor_park,
