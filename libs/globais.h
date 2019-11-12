@@ -7,13 +7,11 @@ const int 	SKY_FRONT=0,
 			GWHEEL_RING=3,
 			GWHEEL_TROLLEY=4, 
 			GWHEEL_TOP=5;
-			
-
-
-int 
+		
+int 	move=1;
 		gwheel_ring_color=0, 
 		gwheel_trolley_color=0,
-		fog=0, up=1;
+		fog=0, up=1,camw=0;
 
 GLint 	skybox[6], 
 		floor_park,
@@ -22,7 +20,7 @@ GLint 	skybox[6],
 GLfloat viewer[3] = {1.0f, 0.0f, 0.0f},
 		camera[3] = {0.0f, 0.0, 0.0};
 
-GLdouble 	
+GLdouble 	c_angle=90.0,
 			gw_spin = 0.0,
 			cup_spin = 0.0,
 			tower_up_down = 0.0,

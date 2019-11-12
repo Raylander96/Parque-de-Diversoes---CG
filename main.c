@@ -53,7 +53,7 @@ void display(){
 	glRotatef(x_r, 0, 1, 0);
 	Draw_Skybox(viewer[0]+(0.05*movcord[0]),viewer[1]+(0.05*movcord[1]),viewer[2]+(0.05*movcord[2]),250,250,250);
 
-	glTranslatef(movcord[0],movcord[1],movcord[2]);
+	glTranslatef(movcord[0],movcord[1],movcord[2]); 
 	draw_ground();
 	//glColor3f(1.0, 1.0, 1.0);
 
@@ -312,23 +312,57 @@ void fogEnable(){
 void keyboard(unsigned char key, int x, int y){
 	if(key=='+') movcord[1]--;
 	if(key=='-') movcord[1]++;
-	if(key=='w'  || key == 'W')
-	{
+	//if(move){
+		if(key=='w'  || key == 'W'){
 		movcord[0]+=5*cos(-1*x_r*3.14/180.0);
 		movcord[2]+=5*sin(1*x_r*3.14/180.0);
+		}
+
+		if(key== 's'  || key == 'S'){
+			movcord[0]-=5*cos(-1*x_r*3.14/180.0);
+			movcord[2]-=5*sin(1*x_r*3.14/180.0);
+		}
+
+		if(key=='d' || key == 'D') 
+			x_r+=3;
+		
+		if(key=='a' || key == 'A') 
+			x_r-=3;
+	//}
+
+	if(key==75){
+		camw--;
+		place_camera(camw);
 	}
-	if(key== 's'  || key == 'S')
-	{
-		movcord[0]-=5*cos(-1*x_r*3.14/180.0);
-		movcord[2]-=5*sin(1*x_r*3.14/180.0);
+	if(key==77){
+		camw++;
+		place_camera(camw);
 	}
-	if(key=='d' || key == 'D') 
-		x_r+=3;
-	if(key=='a' || key == 'A') 
-		x_r-=3;
+	
 	if(key == 27){
 		exit(0);
 	}
+
+	if(key=='2'){
+		move=0;
+		place_camera(2);
+	}
+	if(key=='3'){
+		move=0;
+		place_camera(3);
+	}
+
+	if(key=='1'){
+		move=1;
+		place_camera(1);
+	}
+
+	if(key=='4'){
+		move=1;
+		place_camera(4);
+	}
+		
+
 	if(key == 'n' || key == 'N'){
 
 		if(fog){
@@ -383,6 +417,46 @@ void loadModels(){
 	cup = carregaModelo("objs/coffeMug1_free_obj.obj");
 	seat_park = carregaModelo("objs/Cgtuts_Wood_Bench_OBJ.obj");
 	
+}
+
+void place_camera(int action)
+{
+
+	camw=action;
+	//Primeira pessoa posicao inicial
+	if(camw==1){
+		viewer[1] = -0.0f;
+		x_r=93;
+		movcord[0]=0;
+		movcord[1]=-10;
+		movcord[2]=-520;
+	}
+	//Roda gigante
+	if(camw==2){	
+		viewer[1] = 0.5;
+		x_r=93;
+		movcord[0]=0;//Direira esquerda
+		movcord[1]=-100;//Cima baixo
+		movcord[2]=-30;//Frente traz=s
+	}
+	//Xicara maluca
+	if(camw==3){
+		viewer[1] = 0.5;
+		x_r=362;	
+		movcord[0]=8;
+		movcord[1]=-100;
+		movcord[2]=-80;
+	}
+
+	//tower
+	if(camw==4){
+		viewer[1] = 1.0;
+		x_r=180;	
+		movcord[0]=-80;
+		movcord[1]=-300;
+		movcord[2]=0;
+	}
+
 }
 
 int main(int argc, char** argv){
