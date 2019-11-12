@@ -16,7 +16,7 @@
 GLuint elephant;
 float elephantrot;
 char ch='1';
-struct modelo *placa, *seat,*tower,*tree_1,*tree_2,*tree_3,*light,*bush,*home,*cup,*seat_park;
+struct modelo *placa, *seat,*tower,*tree_1,*tree_2,*tree_3,*light,*bush,*home,*cup,*seat_park,*parking;
 
 void display();
 
@@ -54,7 +54,7 @@ void display(){
 	Draw_Skybox(viewer[0]+(0.05*movcord[0]),viewer[1]+(0.05*movcord[1]),viewer[2]+(0.05*movcord[2]),250,250,250);
 
 	glTranslatef(movcord[0],movcord[1],movcord[2]); 
-	draw_ground();
+	draw_floor();
 	//glColor3f(1.0, 1.0, 1.0);
 
 	
@@ -146,12 +146,12 @@ void display(){
 		glPushMatrix();
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			glTranslatef(k, -15, +400);
-			glScalef(10, 10, 10);
+			glScalef(20, 20, 20);
 			glEnable(GL_LIGHTING);
 			desenhaModelo(bush);
 			glDisable(GL_LIGHTING);
 		glPopMatrix();
-		k=k-12;
+		k=k-15;
 	}
 	//lateral direita
 	float l = 400;
@@ -159,12 +159,12 @@ void display(){
 		glPushMatrix();
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			glTranslatef(k, -15, l);
-			glScalef(10, 10, 10);
+			glScalef(20, 20, 20);
 			glEnable(GL_LIGHTING);
 			desenhaModelo(bush);
 			glDisable(GL_LIGHTING);
 		glPopMatrix();
-		l=l-12;
+		l=l-15;
 	}
 
 	//Frente lado direito
@@ -173,12 +173,12 @@ void display(){
 		glPushMatrix();
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			glTranslatef(k, -15, +400);
-			glScalef(10, 10, 10);
+			glScalef(20, 20, 20);
 			glEnable(GL_LIGHTING);
 			desenhaModelo(bush);
 			glDisable(GL_LIGHTING);
 		glPopMatrix();
-		k=k+12;
+		k=k+15;
 	}
 
 	//lateral esquerdo
@@ -187,25 +187,25 @@ void display(){
 		glPushMatrix();
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			glTranslatef(k, -15, l);
-			glScalef(10, 10, 10);
+			glScalef(20, 20, 20);
 			glEnable(GL_LIGHTING);
 			desenhaModelo(bush);
 			glDisable(GL_LIGHTING);
 		glPopMatrix();
-		l=l-12;
+		l=l-15;
 	}
 
 	//fundo
-	for(int i=0 ; i <57; i++){
+	for(int i=0 ; i <56; i++){
 		glPushMatrix();
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 			glTranslatef(k, -15, l);
-			glScalef(10, 10, 10);
+			glScalef(20, 20, 20);
 			glEnable(GL_LIGHTING);
 			desenhaModelo(bush);
 			glDisable(GL_LIGHTING);
 		glPopMatrix();
-		k=k-12;
+		k=k-15;
 	}
 
 	glPushMatrix();
@@ -277,6 +277,15 @@ void display(){
 		j=j-50;
 	}
 
+	//Estacionamento
+	glPushMatrix();
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			glTranslatef(420, -15, -50);
+			glScalef(5, 5, 5);
+			glEnable(GL_LIGHTING);
+			desenhaModelo(parking);
+			glDisable(GL_LIGHTING);
+		glPopMatrix();
 
 	glutSwapBuffers();
 }
@@ -416,7 +425,7 @@ void loadModels(){
 	home = carregaModelo("objs/house.obj");
 	cup = carregaModelo("objs/coffeMug1_free_obj.obj");
 	seat_park = carregaModelo("objs/Cgtuts_Wood_Bench_OBJ.obj");
-	
+	parking = carregaModelo("objs/parking lot.obj");
 }
 
 void place_camera(int action)

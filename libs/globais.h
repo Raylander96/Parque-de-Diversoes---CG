@@ -21,9 +21,9 @@ GLfloat viewer[3] = {1.0f, 0.0f, 0.0f},
 		camera[3] = {0.0f, 0.0, 0.0};
 
 GLdouble 	c_angle=90.0,
-			gw_spin = 0.0,
-			cup_spin = 0.0,
-			tower_up_down = 0.0,
+			gw_spin = 0.0,//Girar roda gigante
+			cup_spin = 0.0,//Girar xicaras
+			tower_up_down = 0.0, // Subir descer brinquedo tower
 			gw_width = 8.0, 
 			gw_x=-180.0, 
 			gw_y=50.0, 
