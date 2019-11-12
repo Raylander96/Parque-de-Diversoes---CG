@@ -36,7 +36,7 @@ make
 
 ## Instruções Gerais
 
-Há 3  tipos de câmera controlado pelo teclado. A
+Há 3  tipos de câmera controlado pelo teclado:
     
     Tecla 1 - Camera diagonal do parque vista de cima, podendo ser controlado pelas teclas W,S,A,D
     Tecla 2 - Camera de cada brinquedo do parque podendo alternar entre cada brinquedo com as setas direita e esquerda do teclado
