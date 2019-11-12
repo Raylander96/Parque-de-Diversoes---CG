@@ -16,7 +16,7 @@
 GLuint elephant;
 float elephantrot;
 char ch='1';
-struct modelo *placa, *seat,*tower,*tree_1,*tree_2,*tree_3,*light,*bush,*home,*cup,*seat_park,*parking;
+struct modelo *placa, *seat,*tower,*tree_1,*tree_2,*tree_3,*light,*bush,*home,*cup,*seat_park,*parking,*flowers;
 
 void display();
 void processSpecialKeys(int key, int xx, int yy);
@@ -116,28 +116,54 @@ void display(){
 
 	float j = 390;
 	for(int i=0 ; i <5; i++){
-		glPushMatrix();
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			glTranslatef(-220, -15, j);
-			glScalef(10, 10, 10);
-			glEnable(GL_LIGHTING);
-			desenhaModelo(light);
-			glDisable(GL_LIGHTING);
-		glPopMatrix();
-		j=j-50;
+			if(i!=4){
+				glPushMatrix();
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+					glTranslatef(-220, -15, j);
+					glScalef(10, 10, 10);
+					glEnable(GL_LIGHTING);
+					desenhaModelo(light);
+					glDisable(GL_LIGHTING);
+				glPopMatrix();
+				j=j-50;
+			}
+			if(i==4){
+				glPushMatrix();
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+					glTranslatef(-230, 0, j+2);
+					glScalef(1.5, 1.5, 1.5);
+					glEnable(GL_LIGHTING);
+					desenhaModelo(flowers);
+					glDisable(GL_LIGHTING);
+				glPopMatrix();
+			}
 	}
 
 	j = 390;
 	for(int i=0 ; i <5; i++){
-		glPushMatrix();
+
+		if(i!=4){
+			glPushMatrix();
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				glTranslatef(-140, -15, j);
+				glScalef(10, 10, 10);
+				glEnable(GL_LIGHTING);
+				desenhaModelo(light);
+				glDisable(GL_LIGHTING);
+			glPopMatrix();
+			j=j-50;
+		}
+		
+		if(i==4){
+			glPushMatrix();
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			glTranslatef(-140, -15, j);
-			glScalef(10, 10, 10);
+			glTranslatef(-133, 0, j+2);
+			glScalef(1.5, 1.5, 1.5);
 			glEnable(GL_LIGHTING);
-			desenhaModelo(light);
+			desenhaModelo(flowers);
 			glDisable(GL_LIGHTING);
-		glPopMatrix();
-		j=j-50;
+			glPopMatrix();
+		}
 	}
 	
 	//Frente lado esquerdo
@@ -286,6 +312,9 @@ void display(){
 			desenhaModelo(parking);
 			glDisable(GL_LIGHTING);
 		glPopMatrix();
+		
+	
+	
 
 	glutSwapBuffers();
 }
@@ -323,19 +352,21 @@ void processSpecialKeys(int key, int xx, int yy){
    switch (key) {
     	 case GLUT_KEY_LEFT :
   			if(move==0 && cam<3 && cam!=0){
-				  cam--;
+				cam--;
+				place_camera(cam);
 			}else if(move==0 && cam==0){
 				cam=2;
+				place_camera(cam);
 			}	
-			place_camera(cam);
 			break;
   		case GLUT_KEY_RIGHT :
 			if(move==0 && cam<2){
-				  cam++;
+				cam++;
+				place_camera(cam);
 			}else if(move==0 && cam==2){
 				cam=0;
+				place_camera(cam);
 			}	
-			place_camera(cam);
 			break;
  	}
 	 
@@ -449,6 +480,7 @@ void loadModels(){
 	cup = carregaModelo("objs/coffeMug1_free_obj.obj");
 	seat_park = carregaModelo("objs/Cgtuts_Wood_Bench_OBJ.obj");
 	parking = carregaModelo("objs/parking lot.obj");
+	flowers = carregaModelo("objs/flowers.obj");
 }
 
 void place_camera(int action)
